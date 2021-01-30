@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="RangPaint.View.StatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RangPaint.View"
+             mc:Ignorable="d" 
+             d:DesignWidth="1024">
+    <Grid Background="#FFF0F0F0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="180"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel>
+            <Image Source="/RangPaint;component/Images/Arrow_Cross.png" Height="13" Margin="5,0" VerticalAlignment="Center"/>
+            <Rectangle Stroke="LightGray" Width="1" DockPanel.Dock="Right"/>
+            <TextBlock Text="{Binding MouseLocationText}" VerticalAlignment="Center"/>
+        </DockPanel>
+        <DockPanel Grid.Column="1">
+            <Image Source="/RangPaint;component/Images/field.png" Height="13" Margin="5,0" VerticalAlignment="Center"/>
+            <Rectangle Stroke="LightGray" Width="1" DockPanel.Dock="Right"/>
+            <TextBlock Text="{Binding FieldSizeText}" VerticalAlignment="Center"/>
+        </DockPanel>
+        <DockPanel Grid.Column="2">
+            <Image Source="/RangPaint;component/Images/canvas.png" Height="13" Margin="5,0" VerticalAlignment="Center"/>
+            <Rectangle Stroke="LightGray" Width="1" DockPanel.Dock="Right"/>
+            <TextBlock Text="{Binding CanvasSizeText}" VerticalAlignment="Center"/>
+        </DockPanel>
+        <DockPanel Grid.Column="3" Visibility="{Binding IsSavedVisible}">
+            <Image Source="/RangPaint;component/Images/save.png" Height="13" Margin="5,0" VerticalAlignment="Center"/>
+            <Rectangle Stroke="LightGray" Width="1" DockPanel.Dock="Right"/>
+            <TextBlock Text="{Binding FileSizeText}" VerticalAlignment="Center"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

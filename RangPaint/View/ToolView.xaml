@@ -1,0 +1,475 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RangPaint.View"
+             xmlns:colorPicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+             xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
+             x:Class="RangPaint.View.ToolView"
+             mc:Ignorable="d" 
+             d:DesignHeight="130" d:DesignWidth="1200" Background="White">
+    <UserControl.Resources>
+        <Style x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="ClickMode" Value="Press"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="templateRoot" SnapsToDevicePixels="true" Background="Transparent">
+                            <Path x:Name="arrow" Data="M0,0 10,0 5,8 z" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="arrow" Value="#FF56C9FF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Fill" TargetName="arrow" Value="#FF56C9FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="ComboBoxTemplate" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height ="*"/>
+                    <RowDefinition Height="12"/>
+                </Grid.RowDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.RowSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
+                    <Themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="100">
+                        <Border x:Name="dropDownBorder" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                            <ScrollViewer x:Name="DropDownScrollViewer">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="opaqueRect" Fill="{Binding Background, ElementName=dropDownBorder}" Height="{Binding ActualHeight, ElementName=dropDownBorder}" Width="{Binding ActualWidth, ElementName=dropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </Themes:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Row="1" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxToggleButton}"/>
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="false">
+                    <Setter Property="Height" TargetName="dropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="true"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                </MultiTrigger>
+                <Trigger Property="ScrollViewer.CanContentScroll" SourceName="DropDownScrollViewer" Value="false">
+                    <Setter Property="Canvas.Top" TargetName="opaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="opaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="ComboBoxStyle1" TargetType="{x:Type ComboBox}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Padding" Value="6,3,5,3"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template" Value="{StaticResource ComboBoxTemplate}"/>
+        </Style>
+        <Style x:Key="ColorButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="Gray" BorderThickness="1"  SnapsToDevicePixels="true">
+                            <Border Margin="1,1" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF56C9FF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF56C9FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Border x:Name="bd" Background="Transparent" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="bd" Value="#FF62A2E4" />
+                                <Setter Property="Background" TargetName="bd" Value="#FFC9E0F7"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="BorderBrush" TargetName="bd" Value="#FF62A2E4" />
+                                <Setter Property="Background" TargetName="bd" Value="#FFC9E0F7"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="BorderBrush" TargetName="bd" Value="#FF62A2E4" />
+                                <Setter Property="Background" TargetName="bd" Value="#FFC9E0F7"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter Property="BorderBrush" TargetName="bd" Value="Transparent" />
+                                <Setter Property="Background" TargetName="bd" Value="Transparent"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl x:Name="tabControl">
+            <TabItem Header="主页">
+                <StackPanel Background="#FFF5F6F7" Orientation="Horizontal">
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Margin="10,10,10,0">
+                                <Button Background="{x:Null}" BorderBrush="{x:Null}" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="Paste" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <StackPanel>
+                                        <Image Width="30" Source="/RangPaint;component/Images/paste.png" />
+                                        <TextBlock Text="Вставить" HorizontalAlignment="Center" Margin="0,8"/>
+                                    </StackPanel>
+                                </Button>
+                                <StackPanel Margin="5,0,0,0">
+                                    <Button Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <ei:CallMethodAction MethodName="Cut" TargetObject="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="18" Source="/RangPaint;component/Images/cut.png" />
+                                            <TextBlock Text="Вырезать" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <ei:CallMethodAction MethodName="Copy" TargetObject="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="18" Source="/RangPaint;component/Images/copy.png" />
+                                            <TextBlock Text="Копировать" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="3,0"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Background="{x:Null}" BorderBrush="{x:Null}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <ei:CallMethodAction MethodName="ExportSVG" TargetObject="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="18" Source="/RangPaint;component/Images/copy.png" />
+                                            <TextBlock Text="Экспорт в svg" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="3,0"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </DockPanel>
+                            <TextBlock Grid.Row="1" Text="Операции" Foreground="Gray" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel Margin="10,10,10,0">
+                                <StackPanel Margin="5,0,0,0">
+                                    <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <ei:CallMethodAction MethodName="SelectMode" TargetObject="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Image Width="18" Source="/RangPaint;component/Images/resize.png" />
+                                            <TextBlock Text="Масштаб" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Left">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Click">
+                                                <ei:CallMethodAction MethodName="SelectMode" TargetObject="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="18" Source="/RangPaint;component/Images/rotation.png" />
+                                            <TextBlock Text="Повернуть" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="3,0"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </DockPanel>
+                            <TextBlock Grid.Row="1" Text="Трансформации" Foreground="Gray" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border Width="97" BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <WrapPanel VerticalAlignment="Center">
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Выделить">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="RecSelectMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/select.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Карандаш" IsChecked="True">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="PenMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/pen.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Кисть">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="BrushMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/brush.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Ластик">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="EraseByStrokeMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image Source="/RangPaint;component/Images/eraser.png" />
+                                </RadioButton>
+
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Текст">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="TextMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/A.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Выбрать цвет">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="ColorPickerMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/color_picker.png" />
+                                </RadioButton>
+                            </WrapPanel>
+                            <TextBlock Grid.Row="1" Text="Инструменты" Foreground="Gray" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border Width="97" BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <WrapPanel VerticalAlignment="Center">
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Линия">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="DrawLine" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/line.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Эллипс">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="DrawEllipse" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/ellipse.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Прямоугольник">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="DrawRectangle" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/rectangle.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Стрелка">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="DrawArrow" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/arrow.png" />
+                                </RadioButton>
+                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Треугольник">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="DrawTriangle" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Image  Source="/RangPaint;component/Images/triangle.png" />
+                                </RadioButton>
+                            </WrapPanel>
+                            <TextBlock Grid.Row="1" Text="Фигуры" Foreground="Gray" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border Width="60" BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <ComboBox Height="55" Margin="5,0" SelectedIndex="{Binding PenWidthIndex}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" Style="{DynamicResource ComboBoxStyle1}">
+                                <ComboBoxItem Height="20">
+                                    <Rectangle Height="2" Stroke="Black" Fill="Black" Width="88"  />
+                                </ComboBoxItem>
+                                <ComboBoxItem Height="20">
+                                    <Rectangle Height="4" Stroke="Black" Fill="Black" Width="88"   />
+                                </ComboBoxItem>
+                                <ComboBoxItem Height="20">
+                                    <Rectangle Height="6" Stroke="Black" Fill="Black" Width="88"  />
+                                </ComboBoxItem>
+                                <ComboBoxItem Height="20">
+                                    <Rectangle Height="8" Stroke="Black" Fill="Black" Width="88"  />
+                                </ComboBoxItem>
+                            </ComboBox>
+                            <TextBlock Grid.Row="1" Text="Толщина" Foreground="Gray" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border Width="420" BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="15"/>
+                            </Grid.RowDefinitions>
+                            <DockPanel>
+                                <RadioButton Margin="10,10,5,0" Padding="1,8" GroupName="color" IsChecked="True">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="ForegroundMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <StackPanel>
+                                        <Grid Width="30"  Height="30" >
+                                            <Rectangle Stroke="Gray"/>
+                                            <Rectangle Width="26" Height="26" Fill="{Binding Foreground}"/>
+                                        </Grid>
+                                        <TextBlock Text="Цвет пера" HorizontalAlignment="Center" Margin="2,8"/>
+                                    </StackPanel>
+                                </RadioButton>
+                                <RadioButton Margin="0,10,5,0" Padding="1,8" GroupName="color">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="BackgroundMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <StackPanel>
+                                        <Grid Width="30"  Height="30" >
+                                            <Rectangle Stroke="Gray"/>
+                                            <Rectangle Width="26" Height="26" Fill="{Binding Background}"/>
+                                        </Grid>
+                                        <TextBlock Text="Цвет фона" HorizontalAlignment="Center" Margin="2,8"/>
+                                    </StackPanel>
+                                </RadioButton>
+                                <Button x:Name="btnEditColor" Background="Transparent" DockPanel.Dock="Right" BorderBrush="{x:Null}" Margin="5,10,10,0">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <ei:CallMethodAction MethodName="EditColorMode" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <StackPanel>
+                                        <Border BorderBrush="Gray" BorderThickness="1" Width="30" Height="30">
+                                            <Image Source="/RangPaint;component/Images/Gradient.png" Margin="1"/>
+                                        </Border>
+                                        <TextBlock Text="Цвет" HorizontalAlignment="Center" Margin="2,8"/>
+                                    </StackPanel>
+                                </Button>
+                                <Popup Placement="Bottom" PlacementTarget="{Binding ElementName=btnEditColor}" AllowsTransparency="True" PopupAnimation="Fade" IsOpen="{Binding IsOpenEditColor}" StaysOpen="False">
+                                    <colorPicker:ColorPicker x:Name="colorPicker" Width="280" Height="100" SelectedColor="{Binding SelectColor,Mode=TwoWay}" BorderBrush="Gray" BorderThickness="1" Background="#FFF5F6F7"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Popup>
+                                <WrapPanel HorizontalAlignment="Center" Margin="0,10,0,0" >
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <ei:CallMethodAction MethodName="SelectColorClick" TargetObject="{Binding}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Button Width="20" Height="20" Margin="2" Background="Black" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Gray" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="DarkRed" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Red" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Orange" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Yellow" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Green" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Blue" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Indigo" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Purple" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="White" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="LightGray" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Brown" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Pink" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Gold" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="LightYellow" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Lime" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="LightSkyBlue" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="SteelBlue" Style="{DynamicResource ColorButtonStyle}"/>
+                                    <Button Width="20" Height="20" Margin="2" Background="Transparent" Style="{DynamicResource ColorButtonStyle}">
+                                        <Line X1="16" X2="0" Y1="0" Y2="16" Stroke="#FF7C7C7C"  />
+                                    </Button>
+                                </WrapPanel>
+
+                            </DockPanel>
+                            <TextBlock Grid.Row="1" Text="Цвет" Foreground="Gray" HorizontalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </TabItem>
+            <!--<TabItem Header="查看">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>-->
+        </TabControl>
+
+    </Grid>
+</UserControl>
