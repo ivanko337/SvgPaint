@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RangPaint.Model
+﻿namespace RangPaint.Model
 {
     public enum ModeEnum
     {
@@ -13,12 +7,6 @@ namespace RangPaint.Model
         Pen,
         Eraser,
         Draw
-    }
-
-    public enum ColorPickerModeEnum
-    {
-        True,
-        False
     }
 
     public enum ColorModeEnum

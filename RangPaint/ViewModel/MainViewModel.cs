@@ -39,7 +39,7 @@ namespace RangPaint.ViewModel
 
         private ModeEnum curOperationMode;
         private ColorModeEnum curColorMode;
-        private ColorPickerModeEnum curColorPickerMode;
+        private bool curColorPickerMode;
 
         private Brush foreground;
 
@@ -261,7 +261,7 @@ namespace RangPaint.ViewModel
             Foreground = Brushes.Black;
             Background = Brushes.White;
             curColorMode = ColorModeEnum.Foreground;
-            curColorPickerMode = ColorPickerModeEnum.False;
+            curColorPickerMode = false;
             SelectColor = Colors.Black;
 
             PenMode();
@@ -309,9 +309,11 @@ namespace RangPaint.ViewModel
 
                 foreach (var stroke in inkCanvas.Strokes)
                 {
-                    var rect = stroke as StrokeBase;
+                    var points = stroke.StylusPoints;
 
-                    fs.WriteLine(rect.GetSvgMarkup());
+                    var shape = stroke as StrokeBase;
+
+                    fs.WriteLine(shape.GetSvgMarkup() ?? "");
                 }
 
                 fs.WriteLine("</svg>");
@@ -368,12 +370,6 @@ namespace RangPaint.ViewModel
             inkCanvas.EditingMode = InkCanvasEditingMode.Ink;
         }
 
-        public void BrushMode()
-        {
-            curOperationMode = ModeEnum.Draw;
-            curDraw = new DrawBrush();
-        }
-
         public void EraseByStrokeMode()
         {
             curDraw = null;
@@ -384,7 +380,7 @@ namespace RangPaint.ViewModel
         public void ColorPickerMode()
         {
             //curDraw = null;
-            curColorPickerMode = ColorPickerModeEnum.True;
+            curColorPickerMode = true;
             inkCanvas.EditingMode = InkCanvasEditingMode.None;
         }
 
@@ -496,7 +492,7 @@ namespace RangPaint.ViewModel
 
         private void InkCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            CanvasSizeText = inkCanvas.ActualWidth + "," + inkCanvas.ActualHeight + " 像素";
+            CanvasSizeText = inkCanvas.ActualWidth + "," + inkCanvas.ActualHeight + " пикселей";
         }
 
         private void Canvas_SelectionMovingOrResizing(object sender, InkCanvasSelectionEditingEventArgs e)
@@ -514,7 +510,7 @@ namespace RangPaint.ViewModel
                 e.NewRectangle = newRect2;
             }
 
-            FieldSizeText = (int)newRect.Width + "," + (int)newRect.Height + " 像素";
+            FieldSizeText = (int)newRect.Width + "," + (int)newRect.Height + " пикселей";
             editingOperationCount++;
             CommandItem item = new SelectionMovedOrResizedCI(doCmdStack, inkCanvas.GetSelectedStrokes(), newRect, oldRect, editingOperationCount);
             doCmdStack.Enqueue(item);
@@ -536,9 +532,9 @@ namespace RangPaint.ViewModel
                 }
             }
 
-            if (curColorPickerMode == ColorPickerModeEnum.True)
+            if (curColorPickerMode)
             {
-                curColorPickerMode = ColorPickerModeEnum.False;
+                curColorPickerMode = false;
 
                 Mouse.OverrideCursor = Cursors.Arrow;
                 POINT p;
@@ -582,7 +578,7 @@ namespace RangPaint.ViewModel
             var point = e.GetPosition(inkCanvas);
             if (point.X >= 0 && point.Y >= 0)
             {
-                MouseLocationText = (int)point.X + "," + (int)point.Y + " 像素";
+                MouseLocationText = (int)point.X + "," + (int)point.Y + " пикселей";
             }
             else
             {
@@ -600,7 +596,7 @@ namespace RangPaint.ViewModel
                     if (curDraw.StrokeResult != null)
                     {
                         Rect rect = curDraw.StrokeResult.GetBounds();
-                        FieldSizeText = (int)rect.Width + "," + (int)rect.Height + " 像素";
+                        FieldSizeText = (int)rect.Width + "," + (int)rect.Height + " пикселей";
                     }
 
                 }
@@ -610,7 +606,7 @@ namespace RangPaint.ViewModel
                 }
             }
 
-            if (curColorPickerMode == ColorPickerModeEnum.True)
+            if (curColorPickerMode)
             {
                 StreamResourceInfo sri = Application.GetResourceStream(new Uri("/RangPaint;component/Images/color_cursor.cur", UriKind.Relative));
                 Cursor customCursor = new Cursor(sri.Stream);
@@ -622,7 +618,7 @@ namespace RangPaint.ViewModel
         {
             MouseLocationText = "";
 
-            if (curColorPickerMode == ColorPickerModeEnum.True)
+            if (curColorPickerMode)
             {
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
@@ -669,9 +665,9 @@ namespace RangPaint.ViewModel
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern bool GetCursorPos(out POINT pt);
 
-        [DllImport("user32.dll")]//取设备场景
-        private static extern IntPtr GetDC(IntPtr hwnd);//返回设备场景句柄
-        [DllImport("gdi32.dll")]//取指定点颜色
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetDC(IntPtr hwnd);
+        [DllImport("gdi32.dll")]
         private static extern int GetPixel(IntPtr hdc, int nXPos, int nYPos);
 
 

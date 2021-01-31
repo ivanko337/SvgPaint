@@ -151,7 +151,7 @@
     </UserControl.Resources>
     <Grid>
         <TabControl x:Name="tabControl">
-            <TabItem Header="主页">
+            <TabItem Header="Главная">
                 <StackPanel Background="#FFF5F6F7" Orientation="Horizontal">
                     <Border BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
                         <Grid>
@@ -268,14 +268,6 @@
                                     </i:Interaction.Triggers>
                                     <Image  Source="/RangPaint;component/Images/pen.png" />
                                 </RadioButton>
-                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Кисть">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <ei:CallMethodAction MethodName="BrushMode" TargetObject="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/brush.png" />
-                                </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Ластик">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
@@ -283,15 +275,6 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <Image Source="/RangPaint;component/Images/eraser.png" />
-                                </RadioButton>
-
-                                <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Текст">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <ei:CallMethodAction MethodName="TextMode" TargetObject="{Binding}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/A.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Выбрать цвет">
                                     <i:Interaction.Triggers>

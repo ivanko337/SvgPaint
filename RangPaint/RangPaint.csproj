@@ -92,14 +92,12 @@
     <Compile Include="Controls\InkCanvasResizeThumb.cs" />
     <Compile Include="Model\DrawAttributesGuid.cs" />
     <Compile Include="Model\Draw\DrawArrowLine.cs" />
-    <Compile Include="Model\Draw\DrawBrush.cs" />
     <Compile Include="Model\Draw\DrawTriangle.cs" />
     <Compile Include="Model\ModeEnum.cs" />
     <Compile Include="Model\Strokes\TriangleStroke.cs" />
     <Compile Include="ViewModel\RedoUndo.cs" />
     <Compile Include="Controls\SelectAdorner.cs" />
     <Compile Include="Model\Strokes\ArrowLineStroke.cs" />
-    <Compile Include="Model\Strokes\BrushStroke.cs" />
     <Compile Include="Model\Strokes\EllipseStroke.cs" />
     <Compile Include="Model\Strokes\LineStroke.cs" />
     <Compile Include="Model\Strokes\StrokeBase.cs" />

@@ -28,6 +28,9 @@ namespace RangPaint.Model
             {
                 throw new ArgumentNullException("drawingAttributes");
             }
+
+            this.drawingAttributes = drawingAttributes;
+
             Pen pen = new Pen
             {
                 StartLineCap = PenLineCap.Round,
