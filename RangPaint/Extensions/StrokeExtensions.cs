@@ -1,26 +1,24 @@
-﻿using RangPaint.Misc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SvgPaint.Misc;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Ink;
 
-namespace RangPaint.Extensions
+namespace SvgPaint.Extensions
 {
     public static class StrokeExtensions
     {
         public static string SvgMarkup(this Stroke stroke)
         {
-            StringBuilder result = new StringBuilder("<path d=\"");
-            string styles = StrokeMisc.GetStyleSvgAttributes(stroke.DrawingAttributes);
+            StringBuilder result = new StringBuilder("<path d=\"M");
+            string styles = StrokeMisc.GetStyleSvgAttributes(stroke.DrawingAttributes, false);
 
             foreach (var point in stroke.StylusPoints)
             {
-
+                result.Append($"{point.X} {point.Y} ");
             }
 
-            return "";
+            result.Append($"\" {styles} />");
+
+            return result.ToString();
         }
     }
 }

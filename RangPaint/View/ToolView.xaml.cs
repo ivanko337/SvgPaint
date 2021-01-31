@@ -13,10 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RangPaint.View
+namespace SvgPaint.View
 {
     /// <summary>
-    /// ToolView.xaml 的交互逻辑
+    /// ToolView.xaml 
     /// </summary>
     public partial class ToolView : UserControl
     {

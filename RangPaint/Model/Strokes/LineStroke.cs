@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Windows.Shapes;
 
-namespace RangPaint.Model
+namespace SvgPaint.Model
 {
     public class LineStroke : StrokeBase
     {

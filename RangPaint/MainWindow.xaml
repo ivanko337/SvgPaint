@@ -1,12 +1,12 @@
-﻿<Window x:Class="RangPaint.MainWindow"
+﻿<Window x:Class="SvgPaint.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        xmlns:local="clr-namespace:RangPaint"
-        xmlns:view="clr-namespace:RangPaint.View"
+        xmlns:local="clr-namespace:SvgPaint"
+        xmlns:view="clr-namespace:SvgPaint.View"
         mc:Ignorable="d"
         Title="Paint" Height="600" Width="1280">
     <i:Interaction.Triggers>

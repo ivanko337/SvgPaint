@@ -7,8 +7,8 @@
     <ProjectGuid>{45C599F5-BB09-41CC-8FA6-10814275B995}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RangPaint</RootNamespace>
-    <AssemblyName>RangPaint</AssemblyName>
+    <RootNamespace>SvgPaint</RootNamespace>
+    <AssemblyName>SvgPaint</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -90,6 +90,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\InkCanvasResizeThumb.cs" />
+    <Compile Include="Extensions\StrokeExtensions.cs" />
+    <Compile Include="Misc\StrokeMisc.cs" />
     <Compile Include="Model\DrawAttributesGuid.cs" />
     <Compile Include="Model\Draw\DrawArrowLine.cs" />
     <Compile Include="Model\Draw\DrawTriangle.cs" />

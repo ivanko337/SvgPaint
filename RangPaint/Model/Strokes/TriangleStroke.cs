@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Shapes;
 
-namespace RangPaint.Model
+namespace SvgPaint.Model
 {
     class TriangleStroke : StrokeBase
     {

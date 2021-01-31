@@ -1,5 +1,5 @@
-﻿using RangPaint.Controls;
-using RangPaint.Model;
+﻿using SvgPaint.Controls;
+using SvgPaint.Model;
 using Svg;
 using System;
 using System.Collections.Generic;
@@ -18,15 +18,16 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Resources;
 using System.Xml.Linq;
+using SvgPaint.Extensions;
 
-namespace RangPaint.ViewModel
+namespace SvgPaint.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
 
         #region Member
 
-        public InkCanvas inkCanvas { get; set; }     //InkCanvas
+        public InkCanvas inkCanvas { get; set; }
         public DrawStrokeBase curDraw { get; set; }  //current draw stroke
 
         private StrokeCollection lstStrokeClipBoard; //clipboard of strokes
@@ -313,7 +314,7 @@ namespace RangPaint.ViewModel
 
                     var shape = stroke as StrokeBase;
 
-                    fs.WriteLine(shape.GetSvgMarkup() ?? "");
+                    fs.WriteLine(shape?.GetSvgMarkup() ?? stroke.SvgMarkup());
                 }
 
                 fs.WriteLine("</svg>");
@@ -608,7 +609,7 @@ namespace RangPaint.ViewModel
 
             if (curColorPickerMode)
             {
-                StreamResourceInfo sri = Application.GetResourceStream(new Uri("/RangPaint;component/Images/color_cursor.cur", UriKind.Relative));
+                StreamResourceInfo sri = Application.GetResourceStream(new Uri("/SvgPaint;component/Images/color_cursor.cur", UriKind.Relative));
                 Cursor customCursor = new Cursor(sri.Stream);
                 Mouse.OverrideCursor = customCursor;
             }

@@ -1,4 +1,4 @@
-﻿using RangPaint.ViewModel;
+﻿using SvgPaint.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RangPaint
+namespace SvgPaint
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// MainWindow.xaml 
     /// </summary>
     public partial class MainWindow : Window
     {

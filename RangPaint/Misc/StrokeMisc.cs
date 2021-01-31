@@ -1,10 +1,10 @@
-﻿using RangPaint.Model;
+﻿using SvgPaint.Model;
 using System;
 using System.Linq;
 using System.Text;
 using System.Windows.Ink;
 
-namespace RangPaint.Misc
+namespace SvgPaint.Misc
 {
     public static class StrokeMisc
     {
@@ -36,15 +36,24 @@ namespace RangPaint.Misc
             return sb.ToString();
         }
 
-        public static string GetStyleSvgAttributes(DrawingAttributes drawingAttributes)
+        /// <summary>
+        /// Возвращает строку со стилями объекта
+        /// </summary>
+        /// <param name="drawingAttributes">Аттрибуты, с которыми нарисован объект</param>
+        /// <param name="isFilled">Нужно только для стилей нарисованного карандашом линии</param>
+        /// <returns>Валидную для вставки в svg строку со стилями объекта</returns>
+        public static string GetStyleSvgAttributes(DrawingAttributes drawingAttributes, bool isFilled = true)
         {
             string backgroundColor = "";
-            try
+            if (isFilled)
             {
-                backgroundColor = $"fill=\"{GetCorrectColorHex(drawingAttributes.GetPropertyData(DrawAttributesGuid.BackgroundColor).ToString())}\"";
+                try
+                {
+                    backgroundColor = $"fill=\"{GetCorrectColorHex(drawingAttributes.GetPropertyData(DrawAttributesGuid.BackgroundColor).ToString())}\"";
+                }
+                catch
+                { }
             }
-            catch
-            { }
 
             string strokeColor = GetCorrectColorHex(drawingAttributes.Color.ToString());
             double strokeWidth = drawingAttributes.Width;

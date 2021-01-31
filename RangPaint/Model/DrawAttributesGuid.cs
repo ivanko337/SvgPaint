@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RangPaint.Model
+namespace SvgPaint.Model
 {
     public static class DrawAttributesGuid
     {

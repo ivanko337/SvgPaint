@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RangPaint.View"
+             xmlns:local="clr-namespace:SvgPaint.View"
              xmlns:colorPicker="clr-namespace:ColorPicker;assembly=ColorPicker"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
              xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" 
-             x:Class="RangPaint.View.ToolView"
+             x:Class="SvgPaint.View.ToolView"
              mc:Ignorable="d" 
              d:DesignHeight="130" d:DesignWidth="1200" Background="White">
     <UserControl.Resources>
@@ -167,7 +167,7 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <StackPanel>
-                                        <Image Width="30" Source="/RangPaint;component/Images/paste.png" />
+                                        <Image Width="30" Source="/SvgPaint;component/Images/paste.png" />
                                         <TextBlock Text="Вставить" HorizontalAlignment="Center" Margin="0,8"/>
                                     </StackPanel>
                                 </Button>
@@ -179,7 +179,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Width="18" Source="/RangPaint;component/Images/cut.png" />
+                                            <Image Width="18" Source="/SvgPaint;component/Images/cut.png" />
                                             <TextBlock Text="Вырезать" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0"/>
                                         </StackPanel>
                                     </Button>
@@ -190,7 +190,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Width="18" Source="/RangPaint;component/Images/copy.png" />
+                                            <Image Width="18" Source="/SvgPaint;component/Images/copy.png" />
                                             <TextBlock Text="Копировать" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="3,0"/>
                                         </StackPanel>
                                     </Button>
@@ -201,7 +201,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Width="18" Source="/RangPaint;component/Images/copy.png" />
+                                            <Image Width="18" Source="/SvgPaint;component/Images/copy.png" />
                                             <TextBlock Text="Экспорт в svg" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="3,0"/>
                                         </StackPanel>
                                     </Button>
@@ -210,7 +210,7 @@
                             <TextBlock Grid.Row="1" Text="Операции" Foreground="Gray" HorizontalAlignment="Center"/>
                         </Grid>
                     </Border>
-                    <Border BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
+                    <!--<Border BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -225,7 +225,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <StackPanel Orientation="Horizontal" >
-                                            <Image Width="18" Source="/RangPaint;component/Images/resize.png" />
+                                            <Image Width="18" Source="/SvgPaint;component/Images/resize.png" />
                                             <TextBlock Text="Масштаб" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3,0"/>
                                         </StackPanel>
                                     </Button>
@@ -236,7 +236,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Width="18" Source="/RangPaint;component/Images/rotation.png" />
+                                            <Image Width="18" Source="/SvgPaint;component/Images/rotation.png" />
                                             <TextBlock Text="Повернуть" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="3,0"/>
                                         </StackPanel>
                                     </Button>
@@ -244,7 +244,7 @@
                             </DockPanel>
                             <TextBlock Grid.Row="1" Text="Трансформации" Foreground="Gray" HorizontalAlignment="Center"/>
                         </Grid>
-                    </Border>
+                    </Border>-->
                     <Border Width="97" BorderBrush="LightGray" BorderThickness="0,0,1,0" Margin="0,2">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -258,7 +258,7 @@
                                             <ei:CallMethodAction MethodName="RecSelectMode" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/select.png" />
+                                    <Image  Source="/SvgPaint;component/Images/select.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Карандаш" IsChecked="True">
                                     <i:Interaction.Triggers>
@@ -266,7 +266,7 @@
                                             <ei:CallMethodAction MethodName="PenMode" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/pen.png" />
+                                    <Image  Source="/SvgPaint;component/Images/pen.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Ластик">
                                     <i:Interaction.Triggers>
@@ -274,7 +274,7 @@
                                             <ei:CallMethodAction MethodName="EraseByStrokeMode" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image Source="/RangPaint;component/Images/eraser.png" />
+                                    <Image Source="/SvgPaint;component/Images/eraser.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Выбрать цвет">
                                     <i:Interaction.Triggers>
@@ -282,7 +282,7 @@
                                             <ei:CallMethodAction MethodName="ColorPickerMode" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/color_picker.png" />
+                                    <Image  Source="/SvgPaint;component/Images/color_picker.png" />
                                 </RadioButton>
                             </WrapPanel>
                             <TextBlock Grid.Row="1" Text="Инструменты" Foreground="Gray" HorizontalAlignment="Center"/>
@@ -301,7 +301,7 @@
                                             <ei:CallMethodAction MethodName="DrawLine" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/line.png" />
+                                    <Image  Source="/SvgPaint;component/Images/line.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Эллипс">
                                     <i:Interaction.Triggers>
@@ -309,7 +309,7 @@
                                             <ei:CallMethodAction MethodName="DrawEllipse" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/ellipse.png" />
+                                    <Image  Source="/SvgPaint;component/Images/ellipse.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Прямоугольник">
                                     <i:Interaction.Triggers>
@@ -317,7 +317,7 @@
                                             <ei:CallMethodAction MethodName="DrawRectangle" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/rectangle.png" />
+                                    <Image  Source="/SvgPaint;component/Images/rectangle.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Стрелка">
                                     <i:Interaction.Triggers>
@@ -325,7 +325,7 @@
                                             <ei:CallMethodAction MethodName="DrawArrow" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/arrow.png" />
+                                    <Image  Source="/SvgPaint;component/Images/arrow.png" />
                                 </RadioButton>
                                 <RadioButton Width="22" Height="22" Margin="5" GroupName="operation" Padding="1" ToolTip="Треугольник">
                                     <i:Interaction.Triggers>
@@ -333,7 +333,7 @@
                                             <ei:CallMethodAction MethodName="DrawTriangle" TargetObject="{Binding}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    <Image  Source="/RangPaint;component/Images/triangle.png" />
+                                    <Image  Source="/SvgPaint;component/Images/triangle.png" />
                                 </RadioButton>
                             </WrapPanel>
                             <TextBlock Grid.Row="1" Text="Фигуры" Foreground="Gray" HorizontalAlignment="Center"/>
@@ -405,7 +405,7 @@
                                     </i:Interaction.Triggers>
                                     <StackPanel>
                                         <Border BorderBrush="Gray" BorderThickness="1" Width="30" Height="30">
-                                            <Image Source="/RangPaint;component/Images/Gradient.png" Margin="1"/>
+                                            <Image Source="/SvgPaint;component/Images/Gradient.png" Margin="1"/>
                                         </Border>
                                         <TextBlock Text="Цвет" HorizontalAlignment="Center" Margin="2,8"/>
                                     </StackPanel>
@@ -449,9 +449,6 @@
                     </Border>
                 </StackPanel>
             </TabItem>
-            <!--<TabItem Header="查看">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>-->
         </TabControl>
 
     </Grid>

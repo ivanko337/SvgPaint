@@ -1,4 +1,4 @@
-﻿namespace RangPaint.Model
+﻿namespace SvgPaint.Model
 {
     public enum ModeEnum
     {

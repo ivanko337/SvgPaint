@@ -13,10 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RangPaint.View
+namespace SvgPaint.View
 {
     /// <summary>
-    /// CanvasView.xaml 的交互逻辑
+    /// CanvasView.xaml 
     /// </summary>
     public partial class CanvasView : UserControl
     {

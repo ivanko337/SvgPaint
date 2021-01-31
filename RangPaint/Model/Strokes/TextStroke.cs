@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Ink;
 using System.Windows;
 
-namespace RangPaint.Model
+namespace SvgPaint.Model
 {
     //class TextStroke : StrokeBase
     //{

@@ -1,4 +1,4 @@
-﻿using RangPaint.Misc;
+﻿using SvgPaint.Misc;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -7,7 +7,7 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace RangPaint.Model
+namespace SvgPaint.Model
 {
     public class StrokeBase : Stroke
     {

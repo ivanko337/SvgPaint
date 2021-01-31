@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace RangPaint.Controls
+namespace SvgPaint.Controls
 {
     /// <summary>
     /// ResizeThumb of InkCanvas

@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="RangPaint.View.CanvasView"
+﻿<UserControl x:Class="SvgPaint.View.CanvasView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:control="clr-namespace:RangPaint.Controls"
-             xmlns:local="clr-namespace:RangPaint.View"
+             xmlns:control="clr-namespace:SvgPaint.Controls"
+             xmlns:local="clr-namespace:SvgPaint.View"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1280" Background="#FFCBD4E4" >
     <UserControl.Resources>
