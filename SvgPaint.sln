@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SvgPaint", "RangPaint\SvgPaint.csproj", "{45C599F5-BB09-41CC-8FA6-10814275B995}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SvgPaint", "SvgPaint\SvgPaint.csproj", "{45C599F5-BB09-41CC-8FA6-10814275B995}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPicker", "ColorPicker\ColorPicker.csproj", "{827F8C33-8118-48C7-AB3C-4864298396AD}"
 EndProject
