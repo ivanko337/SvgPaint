@@ -11,6 +11,8 @@ namespace SvgPaint.Model
 {
     public class StrokeBase : Stroke
     {
+        public string ToirID { get; set; }
+
         protected PathGeometry pathGeomery = null;
         protected DrawingAttributes drawingAttributes;
 
